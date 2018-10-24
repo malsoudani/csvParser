@@ -58013,36 +58013,102 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = function (_Component) {
     _inherits(App, _Component);
 
-    function App() {
+    function App(props) {
         _classCallCheck(this, App);
 
-        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+        _this.state = {
+            name: '',
+            csv: '',
+            fileReturn: false
+            //binding because you can't just use "this" in js in a lifecycle method cuz it references the library class in this context.
+            //Thanks Obama! and Scott and Brian lol.
+        };_this.onFormSubmit = _this.onFormSubmit.bind(_this);
+        _this.onChange = _this.onChange.bind(_this);
+        return _this;
     }
 
     _createClass(App, [{
-        key: "render",
+        key: 'onFormSubmit',
+        value: function onFormSubmit(e) {
+            e.preventDefault();
+            console.log(this.state.csv);
+            axios.post('/csv-upload', {
+                csv: this.state.csv
+            }).then(function (resp) {
+                console.log('wasssap', resp);
+            });
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(e) {
+            var _this2 = this;
+
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                _this2.setState({
+                    csv: e.target.result
+                });
+            };
+            reader.readAsDataURL(files[0]);
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "container" },
+                'div',
+                { className: 'container' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "row justify-content-center" },
+                    'div',
+                    { className: 'row justify-content-center' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "col-md-8" },
+                        'div',
+                        { className: 'col-md-8' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "card" },
+                            'div',
+                            { className: 'card' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "card-header" },
-                                "React Component"
+                                'div',
+                                { className: 'card-header' },
+                                'React Component'
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "card-body" },
-                                "I'm an React component!"
+                                'div',
+                                { className: 'card-body' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'form',
+                                    { onSubmit: this.onFormSubmit },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'div',
+                                            { className: 'input-group' },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'custom-file' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'csv', type: 'file', className: 'custom-file-input', onChange: this.onChange }),
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'label',
+                                                    { name: 'csv', className: 'custom-file-label', htmlFor: 'inputGroupFile04' },
+                                                    'Choose file'
+                                                )
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'input-group-append' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'button',
+                                                    { className: 'btn btn-outline-primary', type: 'submit' },
+                                                    'Upload'
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
                             )
                         )
                     )
