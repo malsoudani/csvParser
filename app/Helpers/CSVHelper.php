@@ -50,6 +50,9 @@ class CSVHelper
 
     public function textOrEmail($collect)
     {
+        if (strpos($collect->message, "sooo old")) {
+            return $collect;
+        }
         if (strlen(str_replace('-', "", (trim($collect->cust_phone)))) == 10) {
             $collect->delivery_method = 'text';
             return $collect;

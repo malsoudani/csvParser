@@ -58021,39 +58021,105 @@ var App = function (_Component) {
         _this.state = {
             name: '',
             csv: '',
-            fileReturn: false
+            returnedData: []
             //binding because you can't just use "this" in js in a lifecycle method cuz it references the library class in this context.
             //Thanks Obama! and Scott and Brian lol.
         };_this.onFormSubmit = _this.onFormSubmit.bind(_this);
         _this.onChange = _this.onChange.bind(_this);
+        _this.renderCustomers = _this.renderCustomers.bind(_this);
         return _this;
     }
 
     _createClass(App, [{
         key: 'onFormSubmit',
         value: function onFormSubmit(e) {
+            var _this2 = this;
+
             e.preventDefault();
             console.log(this.state.csv);
             axios.post('/csv-upload', {
                 csv: this.state.csv
             }).then(function (resp) {
-                console.log('wasssap', resp);
+                _this2.setState({
+                    returnedData: resp.data
+                });
             });
         }
     }, {
         key: 'onChange',
         value: function onChange(e) {
-            var _this2 = this;
+            var _this3 = this;
 
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
             var reader = new FileReader();
             reader.onload = function (e) {
-                _this2.setState({
+                _this3.setState({
                     csv: e.target.result
                 });
             };
             reader.readAsDataURL(files[0]);
+        }
+        // show repsonse code here
+
+    }, {
+        key: 'renderCustomers',
+        value: function renderCustomers() {
+            // I kinda just dumped it on the screen. Sorry about that
+            return this.state.returnedData.map(function (data) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'card-body' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { key: data.cust_num, className: 'bg-info' },
+                        'Trans Type : ',
+                        data.trans_type,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'Trans Date : ',
+                        data.trans_date,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'Trans Time : ',
+                        data.trans_time,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'Cust # : ',
+                        data.cust_num,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'First Name : ',
+                        data.cust_fname,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'Email : ',
+                        data.cust_email,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'Phone : ',
+                        data.cust_phone,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'Invite Type : ',
+                        data.invite,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'Delivery Method : ',
+                        data.delivery_method,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'Sent/Not Sent : ',
+                        data.delivery_status,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                        'special Notes : ',
+                        data.message,
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null)
+                    )
+                );
+            });
         }
     }, {
         key: 'render',
@@ -58073,7 +58139,7 @@ var App = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 { className: 'card-header' },
-                                'React Component'
+                                'Upload a CSV and look out for the parser'
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
@@ -58108,7 +58174,9 @@ var App = function (_Component) {
                                             )
                                         )
                                     )
-                                )
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
+                                this.renderCustomers()
                             )
                         )
                     )

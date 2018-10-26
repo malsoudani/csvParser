@@ -17,7 +17,7 @@ class CSVController extends Controller
     public function csvHandler(Request $request)
     {
         $csv = new CSVHelper;
-        dd($csv->AnalysisResponse($request));
+        return response($csv->AnalysisResponse($request));
     }
 
 
