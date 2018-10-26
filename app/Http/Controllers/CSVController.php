@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Response;
+use Carbon\Carbon;
+use App\Helpers\CSVHelper;
 
 class CSVController extends Controller
 {
@@ -13,6 +16,9 @@ class CSVController extends Controller
 
     public function csvHandler(Request $request)
     {
-        dd($request->csv);
+        $csv = new CSVHelper;
+        dd($csv->AnalysisResponse($request));
     }
+
+
 }
