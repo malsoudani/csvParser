@@ -7,7 +7,7 @@ class CSVHelper
     public function AnalysisResponse($request)
     {
         $csvCollect = $this->csvToCollection($request->csv);
-        $noDupeCollect = $csvCollect->sortByDesc('trans_date')->unique(function ($item) {
+        $noDupeCollect = $csvCollect->sortBy('trans_date')->unique(function ($item) {
             return $item->cust_fname.$item->cust_email;
         });
         $respArr = [];
