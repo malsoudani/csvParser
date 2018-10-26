@@ -10,3 +10,9 @@ Hello everbody.
 4. hold my beer and upload a csv file.
 
 hope you liked this excercise.
+
+# some pictures of the excercise:
+
+![alt text](https://github.com/malsoudani/csvParser/blob/master/Screen%20Shot%202018-10-26%20at%201.03.28%20AM.png "Before Uploading the File")
+
+![alt text](https://github.com/malsoudani/csvParser/blob/master/Screen%20Shot%202018-10-26%20at%201.03.48%20AM.png "After Uploading the File")
